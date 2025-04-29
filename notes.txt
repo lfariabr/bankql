@@ -1,0 +1,38 @@
+# Create project
+mkdir backend && cd backend
+
+# Initialize .json file
+npm init -y
+
+# Install base dependencies
+npm install koa@2.16.1 apollo-server-koa@3 graphql graphql-subscriptions
+npm install mongoose
+npm install ioredis
+npm install dotenv
+npm install -D typescript ts-node-dev @types/node @types/koa @types/graphql
+
+TODO:
+mutation {
+  createTransaction(
+    senderAccountId: "644abc123",
+    receiverAccountId: "644def456",
+    amount: 500
+  ) {
+    id
+    amount
+    senderAccount {
+      name
+    }
+    receiverAccount {
+      name
+    }
+    createdAt
+  }
+}
+
+ "message": "Cannot query field \"id\" on type \"Transaction\". Did you mean \"_id\"?",
+      "extensions": {
+        "code": "GRAPHQL_VALIDATION_FAILED",
+        "exception": {}
+    ...
+}
