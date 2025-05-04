@@ -3,6 +3,7 @@ import { ApolloServer } from "apollo-server-koa";
 import { typeDefs, resolvers } from "./graphql";
 import mongoose from './db/mongoose';
 import { createPubSub } from './pubsub/redis';
+import { DateTime } from './graphql/scalars/DateTime';
 
 async function startServer() {
     const app = new Koa();
@@ -13,8 +14,11 @@ async function startServer() {
     // Create ApolloServer
     const server = new ApolloServer({
         typeDefs,
-        resolvers,
-        context: () => ({ pubsub: createPubSub() }),
+        resolvers: {
+            DateTime,
+            ...resolvers
+        },
+        context: () => ({ pubsub: createPubSub() })
     });
 
     await server.start();
@@ -25,4 +29,6 @@ async function startServer() {
     });
 }
 
-startServer();
+startServer().catch(err => {
+    console.error('Error starting server:', err);
+});
